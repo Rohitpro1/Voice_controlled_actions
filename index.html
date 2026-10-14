@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131a">
+  <title>VoiceLight — Phone controls</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#dashboard" aria-label="VoiceLight home"><span class="brand-mark" aria-hidden="true">✦</span><span>VoiceLight</span></a>
+      <p class="nav-caption">WORKSPACE</p>
+      <nav>
+        <a class="nav-link active" href="#dashboard"><span aria-hidden="true">◫</span> Dashboard</a>
+        <a class="nav-link" href="#controls"><span aria-hidden="true">◉</span> Phone controls</a>
+        <a class="nav-link" href="#activity"><span aria-hidden="true">◷</span> Activity</a>
+        <a class="nav-link" href="#settings"><span aria-hidden="true">⚙</span> Settings</a>
+      </nav>
+      <div class="sidebar-bottom"><span class="status-dot" id="sidebar-dot"></span><div><strong id="sidebar-status">Checking connection</strong><small>Local backend</small></div></div>
+    </aside>
+
+    <main id="dashboard" class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">DEVICE DASHBOARD</p><h1>Good to see you</h1></div>
+        <button class="icon-button" id="refresh-button" type="button" aria-label="Refresh connection status" title="Refresh status">↻</button>
+      </header>
+
+      <section class="connection-banner" aria-live="polite">
+        <div class="connection-icon" aria-hidden="true">⌁</div>
+        <div class="connection-copy"><strong id="connection-title">Checking your connection…</strong><span id="connection-detail">Looking for the VoiceLight backend on this device.</span></div>
+        <span class="pill" id="connection-pill"><i class="status-dot"></i><span>Checking</span></span>
+      </section>
+
+      <section id="controls" class="section-block">
+        <div class="section-heading"><div><p class="eyebrow">YOUR DEVICE</p><h2>Quick controls</h2></div></div>
+        <div class="control-grid">
+          <article class="card light-card">
+            <div class="card-top"><span class="control-icon amber" aria-hidden="true">☼</span><span class="mini-label">FLASHLIGHT</span></div>
+            <h3>Phone light</h3><p class="muted">Turn your phone flashlight on or off.</p>
+            <div class="light-state"><span class="light-indicator" id="light-indicator"></span><span>Last requested: <span id="light-state">Off</span></span></div>
+            <button class="primary-button" id="light-button" type="button" disabled>Turn on</button>
+          </article>
+          <article class="card voice-card">
+            <div class="card-top"><span class="control-icon blue" aria-hidden="true">♩</span><span class="mini-label">VOICE</span></div>
+            <h3>Voice control</h3><p class="muted">Use the microphone connected to your computer.</p>
+            <div class="voice-status"><span class="mic-dot" id="mic-dot"></span><span id="voice-status">Not listening</span></div>
+            <p class="muted" id="voice-command">Last heard: —</p>
+            <div class="button-row"><button class="secondary-button" id="voice-start" type="button" disabled>Start</button><button class="quiet-button" id="voice-stop" type="button" disabled>Stop</button></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <article class="card notification-card">
+          <div class="section-heading"><div><p class="eyebrow">SEND TO PHONE</p><h2>Notification</h2></div><span class="control-icon green" aria-hidden="true">⌑</span></div>
+          <p class="muted">With Voice Control listening, say “send notification” followed by your message. For a title, say “send notification title reminder message take your keys”.</p>
+          <form id="notification-form">
+            <label for="notification-title">Title</label><input id="notification-title" name="title" maxlength="80" placeholder="e.g. A quick reminder" required>
+            <label for="notification-message">Message</label><textarea id="notification-message" name="message" rows="3" maxlength="300" placeholder="Write a short message…" required></textarea>
+            <button class="primary-button" id="send-notification" type="submit" disabled>Send notification <span aria-hidden="true">→</span></button>
+          </form>
+        </article>
+        <article class="card activity-card" id="activity">
+          <div class="section-heading"><div><p class="eyebrow">RECENT EVENTS</p><h2>Activity</h2></div><button id="clear-activity" class="text-button" type="button">Clear</button></div>
+          <ol class="activity-list" id="activity-list" aria-live="polite"><li class="activity-item"><span class="activity-marker info"></span><div><strong>Dashboard opened</strong><small>Waiting for backend status</small></div><time>Now</time></li></ol>
+        </article>
+      </section>
+
+      <section class="card sent-notifications" id="sent-notifications">
+        <div class="section-heading"><div><p class="eyebrow">SENT FROM THIS SESSION</p><h2>Notification history</h2></div><span class="mini-label" id="notification-count">0 notifications</span></div>
+        <ol class="notification-history-list" id="notification-history" aria-live="polite"><li class="history-empty">Sent notifications will appear here.</li></ol>
+      </section>
+
+      <section class="card settings-card" id="settings"><div><p class="eyebrow">SETTINGS</p><h2>Connection</h2><p class="muted">Local API: <code>http://127.0.0.1:8000</code>.</p></div><div class="button-row"><button class="secondary-button compact" id="reconnect-button" type="button">Reconnect phone</button><button class="secondary-button compact" id="settings-refresh" type="button">Refresh</button></div></section>
+      <p class="footer-note">VoiceLight <span>·</span> Controls are available when the local backend is running.</p>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+</body>
+</html>
